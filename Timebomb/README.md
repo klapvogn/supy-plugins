@@ -1,6 +1,6 @@
 O clássico jogo TimeBomb para IRC.
 
-Bifurcado de https://github.com/oddluck/limnoria-plugins/tree/master/TimeBomb
+Bifurcado de https://github.com/oddluck/limnoria-plugins/tree/master/TimeBomb e traduzido para Português
 
 Compatível com Python 3
 
