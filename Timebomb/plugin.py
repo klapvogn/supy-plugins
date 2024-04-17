@@ -198,7 +198,7 @@ class TimeBomb(callbacks.Plugin):
                         ircmsgs.privmsg(
                             self.channel,
                             "{} rearma a bomba rapidamente e lança-a de volta a {} com"
-                            " apenas alguns segundos no relógio!".format(
+                            " apenas alguns segundos no cronómetro!".format(
                                 self.victim, self.sender
                             ),
                         )
