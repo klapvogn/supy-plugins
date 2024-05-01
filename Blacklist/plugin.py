@@ -197,7 +197,7 @@ class Blacklist(callbacks.Plugin):
         
         Returns a list of banmasks stored in <channel> (requires #channel,op capability)"""
         if channel not in self.db:
-            irc.reply(f'The database for {channel} is currently empty.')
+            irc.reply(f'The bans database for {channel} is currently empty.')
             return
         #irc.reply(f'{len(self.db[channel])} entries in {channel}...')
         padwidth = len(max((mask for mask in self.db[channel])))
