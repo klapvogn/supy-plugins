@@ -177,7 +177,7 @@ class Blacklist(callbacks.Plugin):
             irc.error(f'I\'m not in {channel}.')
             return
         if channel not in self.db or mask not in self.db[channel]:
-            irc.error(f'"{mask}" is not in my database for {channel}.')
+            irc.error(f'"{mask}" is not in my banlist for {channel}.')
             return
         try:
             schedule.removeEvent(f'bl_unban_{channel}{mask}')
@@ -189,7 +189,7 @@ class Blacklist(callbacks.Plugin):
         if len(self.db[channel]) == 0:
             del self.db[channel]
         self._dbWrite()
-        irc.reply(f'"{mask}" removed from database in {channel}.')
+        irc.reply(f'"{mask}" removed from the banlist in {channel}.')
     remove = wrap(remove, [('checkChannelCapability', 'op'), 'channel', 'text'])
     
     def list(self, irc, msg, args, channel):
@@ -197,7 +197,7 @@ class Blacklist(callbacks.Plugin):
         
         Returns a list of banmasks stored in <channel> (requires #channel,op capability)"""
         if channel not in self.db:
-            irc.reply(f'The bans database for {channel} is currently empty.')
+            irc.reply(f'The banlist for {channel} is currently empty.')
             return
         #irc.reply(f'{len(self.db[channel])} entries in {channel}...')
         padwidth = len(max((mask for mask in self.db[channel])))
