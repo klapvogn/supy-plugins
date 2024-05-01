@@ -151,7 +151,7 @@ class Blacklist(callbacks.Plugin):
             try: self.db[channel][mask] = [msg.nick, int(time.time()), reason]
             except KeyError: self.db[channel] = {mask: [msg.nick, int(time.time()), reason]}
             self._dbWrite()
-            #irc.reply(f'"{mask}" added to database for {channel}.')
+            irc.reply(f'"{mask}" added to the banlist for {channel}.')
         irc.queueMsg(ircmsgs.ban(channel, mask))
         for nick in irc.state.channels[channel].users:
             if ircutils.hostmaskPatternEqual(mask, irc.state.nickToHostmask(nick)):
