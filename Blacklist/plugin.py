@@ -83,7 +83,7 @@ class Blacklist(callbacks.Plugin):
             try: self.db[msg.args[0]][msg.args[2]] = [msg.nick, time.time(), '*user-added ban']
             except KeyError: self.db[msg.args[0]] = {msg.args[2]: [msg.nick, time.time(), '*user-added ban']}
             self._dbWrite()
-            irc.reply(f'"{msg.args[2]}" added to database for {msg.args[0]}.')
+            irc.reply(f'"{msg.args[2]}" added to the banlist for {msg.args[0]}.')
     
     def doJoin(self, irc, msg):
         if self.registryValue('enabled', msg.args[0]) and \
