@@ -42,7 +42,7 @@ def configure(advanced):
     conf.registerPlugin("TimeBombPT", True)
 
 
-TimeBomb = conf.registerPlugin("TimeBombPT")
+TimeBombPT = conf.registerPlugin("TimeBombPT")
 # This is where your configuration variables (if any) should go.  For example:
 # conf.registerGlobalValue(TimeBomb, 'someConfigVariableName',
 #     registry.Boolean(False, """Help for someConfigVariableName."""))
