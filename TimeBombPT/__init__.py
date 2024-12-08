@@ -32,7 +32,7 @@
 # Many thanks to pawarswap for the ascii-art bomb!
 
 """
-TimeBomb: 'bombardeia' as pessoas do canal. Se falharem o fio, serão kickados.
+TimeBombPT: 'bombardeia' as pessoas do canal. Se falharem o fio, serão kickados.
 """
 
 import supybot
@@ -40,7 +40,7 @@ import supybot.world as world
 
 # Use this for the version of this plugin.  You may wish to put a CVS keyword
 # in here if you're keeping the plugin in CVS or some similar system.
-__version__ = "2020.11.16+git"
+__version__ = "2024.12.08+git"
 
 # XXX Replace this with an appropriate author or supybot.Author instance.
 __author__ = supybot.Author(
@@ -57,7 +57,7 @@ __maintainer__ = getattr(
 __contributors__ = {}
 
 # This is a url where the most recent plugin package can be downloaded.
-__url__ = "https://github.com/oddluck/limnoria-plugins/"
+__url__ = "https://github.com/TehPeGaSuS/supy-plugins/tree/main/TimeBombPT"
 
 from . import config
 from . import plugin
