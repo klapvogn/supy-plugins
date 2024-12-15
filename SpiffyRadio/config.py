@@ -43,6 +43,6 @@ conf.registerGlobalValue(SpiffyRadio, 'pollingIntervalInSeconds',
     registry.PositiveInteger (30, _("""Interval in seconds to poll the API for track changes""")))
 
 conf.registerGlobalValue(SpiffyRadio, 'errorMessage', 
-    registry.String("Error retrieving current track.", _("""This message is used if there is a problem reaching the API""")))
+    registry.String("API unreachable. Is Icecast running?", _("""This message is used if there is a problem reaching the API""")))
 
 # vim:set shiftwidth=4 tabstop=4 expandtab textwidth=79:
