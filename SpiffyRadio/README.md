@@ -1,4 +1,4 @@
-Radio information for Icecast 2 streams (only one mount, currently)
+Radio information for Icecast 2 streams (only one mount, currently)  
 Based on the original work of butterscotchstallion (https://github.com/butterscotchstallion/limnoria-plugins.git)
 ## Install and load SpiffyRadio
 - `git clone https://github.com/TehPeGaSuS/supy-plugins`
