@@ -79,7 +79,7 @@ class SpiffyRadio(callbacks.Plugin):
 								self.irc.sendMsg(ircmsgs.privmsg(channel, message))
 						else:
 							track_info = (self.last_track["title"])
-							self.log.info("SpiffyRadio: track has not changed - still playing \"%s - %s\". Not announcing." % track_info)
+							self.log.info("SpiffyRadio: track has not changed - still playing \"%s\". Not announcing." % track_info)
 
 			except Exception as e:
 				self.log.error("SpiffyRadio: exception %s", str(e))
