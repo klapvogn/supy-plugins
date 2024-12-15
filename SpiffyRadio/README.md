@@ -2,10 +2,9 @@ Radio information for Icecast 2 streams (only one mount, currently)
 Based on the original work of butterscotchstallion (https://github.com/butterscotchstallion/limnoria-plugins.git)
 ## Install and load SpiffyRadio
 - `git clone https://github.com/TehPeGaSuS/supy-plugins`
-- `cd limnoria-plugins`
+- `cd supy-plugins`
 - `cp -r SpiffyRadio ~/your_bot_directory/plugins`
-- `cd ~/your_bot_directory/plugins/SpiffyRadio`
-- `pip3 install -r requirements.txt --user --upgrade`
+- `pip3 install -r SpiffyRadio/requirements.txt --user --upgrade`
 - `!load SpiffyRadio`
 
 ## Configure SpiffyRadio
