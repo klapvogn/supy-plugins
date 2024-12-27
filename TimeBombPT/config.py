@@ -220,7 +220,7 @@ conf.registerGlobalValue(
 )
 
 conf.registerChannelValue(
-    TimeBomb,
+    TimeBombPT,
     "randomExclusions",
     registry.SpaceSeparatedListOfStrings(
         [],

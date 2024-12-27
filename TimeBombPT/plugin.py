@@ -572,7 +572,7 @@ class TimeBombPT(callbacks.Plugin):
 
         wires = self.rng.sample(colors, wireCount)
         goodWire = self.rng.choice(wires)
-        self.log.info("TimeBomb: Safewire é {}".format(goodWire))
+        self.log.info("TimeBombPT: Safewire é {}".format(goodWire))
         self._logBomb(irc, channel, msg.nick, victim)
         self.bombs[channel] = self.Bomb(
             irc,
@@ -662,7 +662,7 @@ class TimeBombPT(callbacks.Plugin):
 
         wires = self.rng.sample(colors, wireCount)
         goodWire = self.rng.choice(wires)
-        self.log.info("TimeBomb: Safewire é {}.".format(goodWire))
+        self.log.info("TimeBombPT: Safewire é {}.".format(goodWire))
 
         if self.registryValue("debug"):
             irc.reply("Estou prestes a criar uma bomba em {}.".format(channel))
