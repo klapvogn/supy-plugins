@@ -131,7 +131,7 @@ class TimeBomb(callbacks.Plugin):
             self.irc.queueMsg(
                 ircmsgs.privmsg(
                     self.channel,
-                    "{}, tenta deasrmar a bomba usando o comando: '{}cutwire"
+                    "{}, tenta desarmar a bomba usando o comando: '{}cutwire"
                     " \x02côr\x02'".format(self.victim, self.command_char),
                 )
             )
@@ -198,7 +198,7 @@ class TimeBomb(callbacks.Plugin):
                             self.channel,
                             "{} rapidamente rearma a bomba e atira-a de volta"
                             " a {} com apenas alguns segundos no relógio!"
-                            " {} tenta desactivar a bomba com o comando '{}cutwire \x02côr\x02'".format(
+                            " {} tenta desarmar a bomba com o comando '{}cutwire \x02côr\x02'".format(
                                 self.victim, self.sender, self.sender,self.command_char
                             ),
                         )
