@@ -5,26 +5,26 @@ Forked from https://github.com/quantumlemur/Supybot-Plugins/tree/master/Timebomb
 Python 3 compatible
 
 ```
-bombsenabled true (enable timebombs on channel)
+bombsenabled true (activar bombas-relógio no canal)
 ```
 ```
-timebomb <nick> (bombs <nick>)
+timebomb <nick> (bombardeia <nick>)
 ```
 ```
-cutwire <color> (cut <color> wire in an attempt to defuse bomb)
+cutwire <côr> (corta o fio <côr> numa tentativa de desativar a bomba)
 ```
 ```
-duck (duck if cutwire successful and bomb is tossed back to attacker)
+duck (baixar se o cutwire for bem sucedido e a bomba for atirada de volta para o atacante)
 ```
 ```
-randombomb (bomb a random target)
+randombomb (bombardeia um alvo aleatório)
 ```
 ```
-defuse (channel op command to defuse bomb)
+defuse (comando de operador de canal para desativar a bomba)
 ```
 ```
-detonate (channel op command to detonate bomb)
+detonate (comando de operador de canal para detonar a bomba)
 ```
 ```
-config list plugins.timebomb (get the many config variables for timebomb, too lazy to write it all up)
+config list plugins.timebomb (obtêm as muitas variáveis de configuração para o TimeBomb, demasiado preguiçoso para escrever tudo)
 ```
