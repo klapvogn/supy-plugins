@@ -75,7 +75,7 @@ conf.registerGlobalValue(
             "Mostarda",
             "Lavanda",
             "Ameixa",
-            "Caqui,
+            "Caqui",
             "Fucsia",
             "Esmeralda",
             "Oliva",
