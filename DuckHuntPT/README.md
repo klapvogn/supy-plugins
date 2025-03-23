@@ -38,4 +38,4 @@ Several per-channel configuration variables are available (look at the "channel"
 
 Update
 ------
-Get latest version at : https://github.com/veggiematts/supybot-duckhunt
+Get latest version at : https://github.com/TehPeGaSuS/supy-plugins
