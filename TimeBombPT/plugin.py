@@ -1,6 +1,7 @@
 ###
 # Copyright (c) 2010, quantumlemur
 # Copyright (c) 2020, oddluck <oddluck@riseup.net>
+# Copyright (c) 2025, PeGaSuS <droider.pc@gmail.com>
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
