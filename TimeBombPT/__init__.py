@@ -50,7 +50,7 @@ __author__ = supybot.Author(
 __maintainer__ = getattr(
     supybot.authors,
     "PeGaSuS",
-    supybot.Author("PeGaSuS", "PeGaSuS", "25697531+TehPeGaSuS@users.noreply.github.com"),
+    supybot.Author("PeGaSuS", "PeGaSuS", "droider.pc@gmail.com"),
 )
 
 # This is a dictionary mapping supybot.Author instances to lists of
