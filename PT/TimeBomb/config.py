@@ -59,7 +59,7 @@ conf.registerGlobalValue(
             "Castanho",
             "Roxo",
             "Rosa",
-            "Marrom","
+            "Marrom",
             "Cinza",
             "Preto",
             "Branco",
