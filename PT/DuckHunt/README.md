@@ -28,7 +28,7 @@ Como configurar
 ----------------
 Estão disponíveis várias variáveis ​​de configuração por canal (consulte o comando "channel" para saber mais sobre como configurar variáveis ​​de configuração por canal):
 * autoRestart: Uma nova caçada começa automaticamente quando a anterior termina? 
-* patos: Número de patos durante uma caçada? 
+* ducks: Número de patos durante uma caçada? 
 * minthrottle: O tempo mínimo antes de um novo pato poder ser lançado (em segundos)
 * maxthrottle: O tempo máximo antes de um novo pato poder ser lançado (em segundos)
 * reloadTime: O tempo que demora a recarregar a sua espingarda depois de disparar (em segundos)
@@ -38,4 +38,4 @@ Estão disponíveis várias variáveis ​​de configuração por canal (consul
 
 Atualizar
 ------
-Obtenha a versão mais recente em: https://github.com/TehPeGaSuS/supy-plugins
+Obtenha a versão mais recente em: [https://github.com/TehPeGaSuS/supy-plugins/tree/main/PT/DuckHunt](https://github.com/TehPeGaSuS/supy-plugins/tree/main/PT/DuckHunt)
