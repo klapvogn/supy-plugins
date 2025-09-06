@@ -68,7 +68,7 @@ conf.registerChannelValue(Blacklist, 'maskNumber',
         CurrencyCommand(10, """Sets the default banmask number if none is given."""))
 
 conf.registerChannelValue(Blacklist, 'banReason',
-        registry.String("Your mother was a hamster and your father smelt of elderberries!", """Sets the default blacklist message if none is given."""))
+        registry.String("User has been banned from the channel.", """Sets the default blacklist message if none is given."""))
 
 conf.registerChannelValue(Blacklist, 'addManualBans',
         registry.Boolean(True, """Sets whether to watch for channel bans directly added by users (not using the bot) to the database."""))
