@@ -16,4 +16,4 @@ Banmask types:
 9: 'nick!*@*.phost',
 10: '*!ident@*'
 ```
-Note: I'm having some issues with the `phost` masks where a `p` is added to the mask. I'll ask for a fix if I see the user again. (This is probably fixed with commit 1804a3d)
+Note: I'm having some issues with the `phost` masks where a `p` is added to the mask. I'll ask for a fix if I see the user again. (This is probably fixed with commit [1804a3d](https://github.com/TehPeGaSuS/supy-plugins/commit/1804a3d8b9307c46317a516b4091d3c32749ba63))
