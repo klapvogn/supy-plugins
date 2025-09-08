@@ -65,12 +65,18 @@ class Blacklist(callbacks.Plugin):
         
     def _createMask(self, irc, target, num):
         nick, ident, host = ircutils.splitHostmask(irc.state.nickToHostmask(target))
-        mask = self.banmasks[num].replace('nick', nick).replace('ident', ident).replace('host', host)
-        if 'phost' in mask:
-            if '.' in host:
-                mask = mask.replace('phost', host.split('.')[1])
-            else:
-                mask = mask.split('@')[0]+f'@{host}'
+        mask = re.sub(
+            "(nick|ident|host|phost)",
+            lambda match: {
+                "nick": nick,
+                "ident": ident,
+                "host": host,
+                "phost": host.split(".")[1]
+                if "." in host
+                else mask.split("@")[0] + f"@{host}",
+            }[match.group(1)],
+            self.banmasks[num],
+        )
         return mask
     
     def doMode(self, irc, msg):
