@@ -55,6 +55,9 @@ class CurrencyCommand(registry.Integer):
 
 Blacklist = conf.registerPlugin('Blacklist')
 
+conf.registerChannelValue(Blacklist, 'pastebinapikey',
+registry.String("", _("""Pastebin API key. Required."""), private=True))
+
 conf.registerChannelValue(Blacklist, 'enabled',
         registry.Boolean(False, """Set whether to enable database in a channel."""))
 
