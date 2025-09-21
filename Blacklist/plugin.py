@@ -295,7 +295,8 @@ class Blacklist(callbacks.Plugin):
         
         # FOR TESTING: Change 5 to 0 to trigger pastebin for any number of entries
         # In production, you'd use: if len(self.db[channel]) > 5:
-        if len(self.db[channel]) > 0:  # Changed to 0 for testing with 1 entry
+        if len(self.db[channel]) > 5:  # Changed to 0 for testing with 1 entry
+
             # Create formatted content for pastebin
             content = f"Ban List for {channel}\n"
             content += "=" * 50 + "\n\n"
