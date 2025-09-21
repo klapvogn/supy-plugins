@@ -70,7 +70,6 @@ class Blacklist(callbacks.Plugin):
         """Create a paste on pastebin.net using the official API"""
         try:
             # Pastebin API parameters
-            api_dev_key = '2dcd60429c9bcbc693f671ac7dcdfd44'  # Replace with your actual API key
             api_dev_key = self.registryValue("pastebinapikey")
             api_paste_code = content
             api_paste_private = '1'  # 0=public, 1=unlisted, 2=private
@@ -169,6 +168,46 @@ class Blacklist(callbacks.Plugin):
     timer = wrap(timer, [('checkChannelCapability', 'op'), 'channel',
                          'somethingWithoutSpaces', optional('PositiveInt'),
                          optional('text')])
+    
+    def kick(self, irc, msg, args, channel, target, reason):
+        """[<channel>] <nick> [<reason>]
+        
+        Kick a user from the channel without adding to blacklist (requires #channel,op capability)"""
+        self._kick(irc, msg, args, channel, target, reason)
+    kick = wrap(kick, [('checkChannelCapability', 'op'), 'channel',
+                      'somethingWithoutSpaces', optional('text')])
+    
+    def _kick(self, irc, msg, args, channel, target, reason):
+        """Internal method to handle kicking users"""
+        if not self.registryValue('enabled', channel):
+            irc.error(f'Database is disabled in {channel}.')
+            return
+        if not irc.state.channels[channel].isHalfopPlus(irc.nick):
+            irc.error(f'I have no powers in {channel}.')
+            return
+        if channel not in irc.state.channels:
+            irc.error(f'I\'m not in {channel}.')
+            return
+        
+        # Only allow nicknames for kick command (not hostmasks)
+        if not irc.isNick(target):
+            irc.error(f'Invalid nick: {target}')
+            return
+            
+        if ircutils.strEqual(target, irc.nick):
+            irc.error('You want me to kick myself?!')
+            return
+            
+        if target not in irc.state.channels[channel].users:
+            irc.error(f'"{target}" is not in {channel}.')
+            return
+        
+        if not reason:
+            reason = self.registryValue('kickReason', channel)
+        
+        # Kick the user
+        irc.queueMsg(ircmsgs.kick(channel, target, reason))
+        irc.reply(f'"{target}" has been kicked from {channel}.')
     
     def _ban(self, irc, msg, args, channel, target, timer, reason):
         if not self.registryValue('enabled', channel):
