@@ -2,11 +2,13 @@
 # V1.02 - Improved version with better error handling, thread safety, and security
 ###
 
+
 import json
 import os
 import time
 import threading
 import re
+import json, os, time, threading, re
 import random
 import string
 import urllib.request
@@ -122,6 +124,57 @@ class Blacklist(callbacks.Plugin):
             if lapsed >= seconds:
                 return f'{int(lapsed/seconds)}{unit}'
         return '0s'
+        lapsed = int(time.time()-inp)
+        L = (1, 60, 3600, 86400, 604800, 2592000, 31536000)
+        T = ('s', 'm', 'h', 'd', 'w', 'mo')
+        for l, t in zip(L, T):
+            if lapsed < L[L.index(l)+1]:
+                return f'{int(lapsed/l)}{t}'
+        return f'{int(lapsed/60/60/24/365)}y'
+    
+    def _createPastebin(self, content):
+        """Create a paste on pastebin.net using the official API"""
+        try:
+            # Pastebin API parameters
+            api_dev_key = self.registryValue("pastebinapikey")
+            api_paste_code = content
+            api_paste_private = '1'  # 0=public, 1=unlisted, 2=private
+            api_paste_name = 'Ban List Export'
+            api_paste_expire_date = 'N'  # Never expiration
+            api_paste_format = 'text'
+            
+            # Prepare the POST data
+            post_data = {
+                'api_dev_key': api_dev_key,
+                'api_paste_code': api_paste_code,
+                'api_paste_private': api_paste_private,
+                'api_paste_name': api_paste_name,
+                'api_paste_expire_date': api_paste_expire_date,
+                'api_paste_format': api_paste_format,
+                'api_option': 'paste'
+            }
+            
+            # Encode the data
+            encoded_data = urllib.parse.urlencode(post_data).encode('utf-8')
+            
+            # Make the request
+            request = urllib.request.Request('https://pastebin.com/api/api_post.php', data=encoded_data)
+            response = urllib.request.urlopen(request)
+            
+            # Get the response URL
+            result = response.read().decode('utf-8')
+            
+            # Check if the response is a valid URL
+            if result.startswith('https://pastebin.com/'):
+                # Convert to raw URL format
+                paste_id = result.split('/')[-1]
+                raw_url = f'https://pastebin.com/raw/{paste_id}'
+                return raw_url
+            else:
+                return f"Error: {result}"
+                
+        except Exception as e:
+            return f"Error creating pastebin: {str(e)}"
     
     def _createMask(self, irc, target, num):
         """Create ban mask with validation"""
@@ -277,8 +330,7 @@ class Blacklist(callbacks.Plugin):
     timer = wrap(timer, [('checkChannelCapability', 'op'), 'channel',
                          'somethingWithoutSpaces', optional('PositiveInt'),
                          optional('text')])
-
-    def kick(self, irc, msg, args, channel, target, reason):
+   def kick(self, irc, msg, args, channel, target, reason):
         """[<channel>] <nick> [<reason>]
         
         Kick a user from the channel without adding to blacklist (requires #channel,op capability)"""
@@ -299,10 +351,42 @@ class Blacklist(callbacks.Plugin):
             if not condition:
                 irc.error(error_msg)
                 return
+    
+    def _kick(self, irc, msg, args, channel, target, reason):
+        """Internal method to handle kicking users"""
+        if not self.registryValue('enabled', channel):
+            irc.error(f'Database is disabled in {channel}.')
+            return
+        if not irc.state.channels[channel].isHalfopPlus(irc.nick):
+            irc.error(f'I have no powers in {channel}.')
+            return
+        if channel not in irc.state.channels:
+            irc.error(f'I\'m not in {channel}.')
+            return
         
         # Only allow nicknames for kick command (not hostmasks)
         if not irc.isNick(target):
             irc.error(f'Invalid nick: {target}')
+            return
+            
+        if ircutils.strEqual(target, irc.nick):
+            irc.error('You want me to kick myself?!')
+            return
+            
+        if target not in irc.state.channels[channel].users:
+            irc.error(f'"{target}" is not in {channel}.')
+            return
+        
+        if not reason:
+            reason = self.registryValue('kickReason', channel)
+        
+        # Kick the user
+        irc.queueMsg(ircmsgs.kick(channel, target, reason))
+        irc.reply(f'"{target}" has been kicked from {channel}.')
+    
+    def _ban(self, irc, msg, args, channel, target, timer, reason):
+        if not self.registryValue('enabled', channel):
+            irc.error(f'Database is disabled in {channel}.')
             return
             
         if ircutils.strEqual(target, irc.nick):
@@ -461,7 +545,6 @@ class Blacklist(callbacks.Plugin):
 
     def list(self, irc, msg, args, channel):
         """[<channel>]
-        
         Returns a list of banmasks stored in <channel> (requires #channel,op capability)"""
         with self._get_db() as db:
             if channel not in db:
@@ -499,6 +582,31 @@ class Blacklist(callbacks.Plugin):
             else:
                 self._display_ban_list(irc, channel, db[channel])
     
+        if channel not in self.db:
+            irc.reply(f'The banlist for {channel} is currently empty.')
+            return
+        
+        # FOR TESTING: Change 5 to 0 to trigger pastebin for any number of entries
+        # In production, you'd use: if len(self.db[channel]) > 5:
+        if len(self.db[channel]) > 5:  # Changed to 0 for testing with 1 entry
+
+            # Create formatted content for pastebin
+            content = f"Ban List for {channel}\n"
+            content += "=" * 50 + "\n\n"
+            
+            for banmask, v in self.db[channel].items():
+                elapsed = self._elapsed(v[1])
+                content += f"{banmask} - Added by {v[0]} {elapsed} ago (reason: {v[2]})\n"
+            
+            # Create pastebin URL
+            pastebin_url = self._createPastebin(content)
+            irc.reply(f"Ban list too large ({len(self.db[channel])} entries). View at: {pastebin_url}")
+        else:
+            # Original behavior for 5 or fewer entries
+            padwidth = len(max((mask for mask in self.db[channel])))
+            for banmask, v in self.db[channel].items():
+                elapsed = self._elapsed(v[1])
+                irc.reply(f'{banmask.ljust(padwidth, " ")} - Added by {v[0]} {elapsed} ago (reason: {v[2]})')
     list = wrap(list, [('checkChannelCapability', 'op'), 'channel'])
     
     def _display_ban_list(self, irc, channel, bans, limit=None):
