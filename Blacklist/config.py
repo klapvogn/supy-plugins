@@ -55,9 +55,6 @@ class CurrencyCommand(registry.Integer):
 
 Blacklist = conf.registerPlugin('Blacklist')
 
-conf.registerChannelValue(Blacklist, 'pastebinapikey',
-registry.String("", _("""Pastebin API key. Required."""), private=True))
-
 conf.registerChannelValue(Blacklist, 'maxInlineEntries',
         registry.PositiveInteger(5, """Maximum number of ban entries to display inline before using pastebin."""))
 
