@@ -2,11 +2,6 @@ A nifty channel kick and ban plugin.
 
 Written especially for me, by a a username named Kaya on IRC.
 
-For this plugin to work you need and pastebin Apikey, you can get that by signing up on [pastebin.com](https://pastebin.com/) and then go to: [Api Doc](https://pastebin.com/doc_api)
-you should see `Your Unique Developer API Key`
-
-Then you need to : `+config plugins.Blacklist.pastebinapikey <your_pastebin_api_key_here>`
-
 You can customize it almost as you like, here is your options:
 
 ```
