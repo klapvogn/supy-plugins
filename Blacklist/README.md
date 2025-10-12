@@ -2,6 +2,8 @@ A nifty channel kick and ban plugin.
 
 Written especially for me, by a a username named Kaya on IRC.
 
+You can customize it almost as you like, here is your options:
+
 ```
 ###
 # Sets whether to watch for channel bans directly added by users (not
