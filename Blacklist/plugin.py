@@ -149,10 +149,9 @@ class Blacklist(callbacks.Plugin):
             raise
     
     def _createPastebin(self, content):
-        """Create anonymous paste using Pastes.io API with retry logic and fallback"""
+        """Create anonymous paste using Pastes.io API with retry logic"""
         max_retries = 3
         
-        # Try Pastes.io first
         for attempt in range(max_retries):
             try:
                 # Pastes.io API endpoint for anonymous pastes
@@ -190,57 +189,24 @@ class Blacklist(callbacks.Plugin):
                     return f'https://pastes.io/raw/{paste_key}'
                 else:
                     error_msg = result.get('message', 'Unknown error')
+                    logger.warning(f"Pastes.io error: {error_msg}")
                     if attempt == max_retries - 1:
-                        # Try fallback on last attempt
-                        return self._createPasteFallback(content)
+                        return f"Error: Paste service unavailable ({error_msg})"
                     time.sleep(1)
                     
             except (urllib.error.URLError, urllib.error.HTTPError) as e:
                 logger.warning(f"Pastes.io attempt {attempt + 1} failed: {e}")
                 if attempt == max_retries - 1:
-                    # Try fallback on last attempt
-                    return self._createPasteFallback(content)
+                    return f"Error: Paste service unavailable ({str(e)})"
                 time.sleep(1)
                 
             except Exception as e:
                 logger.error(f"Unexpected error creating paste: {e}")
                 if attempt == max_retries - 1:
-                    return self._createPasteFallback(content)
+                    return f"Error: Paste service unavailable ({str(e)})"
                 time.sleep(1)
         
-        return self._createPasteFallback(content)
-
-    def _createPasteFallback(self, content):
-        """Fallback paste service using dpaste.com (no auth required)"""
-        try:
-            api_url = 'https://dpaste.com/api/v2/'
-            
-            post_data = {
-                'content': content,
-                'syntax': 'text',
-                'expiry_days': 7
-            }
-            
-            encoded_data = urllib.parse.urlencode(post_data).encode('utf-8')
-            request = urllib.request.Request(
-                api_url,
-                data=encoded_data,
-                headers={'User-Agent': 'Supybot-Blacklist-Plugin/1.0'},
-                method='POST'
-            )
-            
-            with urllib.request.urlopen(request, timeout=10) as response:
-                paste_url = response.read().decode('utf-8').strip()
-            
-            if paste_url.startswith('https://dpaste.com/'):
-                # Convert to raw URL
-                return paste_url + '.txt'
-            else:
-                return "Error: All paste services unavailable"
-                
-        except Exception as e:
-            logger.error(f"Fallback paste service failed: {e}")
-            return f"Error: Paste services unavailable ({str(e)})"
+        return "Error: Paste service unavailable after multiple retries"
     
     def _remove_from_db(self, channel, mask):
         """Thread-safe removal from database"""
